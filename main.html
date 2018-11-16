@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Welcome to Hotel Monico</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div id="main">
+<!-- jumbotron with two buttons -->
+<!-- view tables and make reservation -->
+
+<div class="container">
+<div class="jumbotron">
+    <h1 class="text-center">Yao Mings Yaommy Dinner</h1>
+    <h3 class="text-center">The greatest restaurant in the galaxy</h3>
+    <hr>
+    <div class="d-flex justify-content-center">
+        <a href="/add" class="ml-2"><button class="btn btn-danger btn-lg"><span class="fa fa-star"></span> Make A
+                Reservation</button></a>
+        <a href="/tables" class="ml-4"><button class="btn btn-success btn-lg"><span class="fa fa-home"></span> View
+                Tables</button></a>
+    </div>
+</div>
+</div>
+
+  <script type="text/javascript">
+    $("#search-btn").on("click", function() {
+      var searchedCharacter = $("#character-search").val().trim();
+
+      // Using a RegEx Pattern to remove spaces from searchedCharacter
+      // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
+      searchedCharacter = searchedCharacter.replace(/\s+/g, "").toLowerCase();
+
+      $.get("/api/characters/" + searchedCharacter, function(data) {
+        console.log(data);
+        if (data) {
+          $("#stats").show();
+          $("#name").text(data.name);
+          $("#role").text(data.role);
+          $("#age").text(data.age);
+          $("#force-points").text(data.forcePoints);
+        }
+        else {
+          $("#name").text("The force is not strong with this one. Your character was not found.");
+          $("#stats").hide();
+        }
+      });
+    });
+  </script>
+
+
+    </div>
+</body>
+</html>
