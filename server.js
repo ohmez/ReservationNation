@@ -6,8 +6,19 @@ var reservations = [ { name: 'john',
 group: '3',
 phoneNum: '80188888453',
 routeName: 'john',
-table: 0}];
-var activeTables = 1;
+table: 1}, 
+{ name: 'sally',
+group: '5',
+phoneNum: '80188888453',
+routeName: 'sally',
+table: 2}, { name: 'bob',
+group: '2',
+phoneNum: '80188888453',
+routeName: 'bob',
+table: 3},
+];
+var activeTables = reservations.length;
+var waitListed = 0;
 
 app.listen(PORT,(err,res) => {
     if (err) throw err;
@@ -32,9 +43,12 @@ app.get("/tables/api", function (req, res) {
 app.post("/tables/api", function (req, res,) {
     var newReservation = req.body;
     newReservation.routeName = newReservation.name.replace(/\s+/g,"").toLowerCase();
-    if(activeTables<=5) {
-        newReservation.table = activeTables;
+    if(activeTables<=4) {
         activeTables++;
+        newReservation.table = activeTables;
+    } else {
+        waitListed++;
+        newReservation.table = 'Wait-List: '+ waitListed;
     }
     reservations.push(newReservation);
     res.json(newReservation);
